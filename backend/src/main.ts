@@ -1,9 +1,10 @@
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
-import { initDatabase } from "./config/database";
-import { usersRouter } from "./users/users.routes";
 import { authRouter } from "./auth/auth.routes";
+import { initDatabase } from "./config/database";
 import { authenticateJwt } from "./middlewares/authenticate-jwt.middleware";
+import { postsRouter } from "./posts/posts.routes";
+import { usersRouter } from "./users/users.routes";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/users", authenticateJwt, usersRouter);
 app.use("/auth", authRouter);
+app.use("/auth", postsRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

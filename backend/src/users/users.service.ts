@@ -9,7 +9,7 @@ export class UsersService {
   private repository: Repository<User>;
 
   constructor() {
-    this.repository = dataSource.getRepository(User);
+    this.repository = User.getRepository();
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
