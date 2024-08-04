@@ -22,7 +22,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/users", authenticateJwt, usersRouter);
 app.use("/auth", authRouter);
-app.use("/auth", postsRouter);
+app.use("/posts", postsRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
