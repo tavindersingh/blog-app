@@ -1,7 +1,10 @@
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
+import { initDatabase } from "./config/database";
 
 dotenv.config();
+
+initDatabase();
 
 const app: Express = express();
 const port = process.env.PORT || 3333;
