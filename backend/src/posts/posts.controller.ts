@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { CreatePostDto } from "./dtos/create-post.dto";
 import { PostsService } from "./posts.service";
 
@@ -23,8 +23,9 @@ export const findAllPosts = async (req: any, res: Response) => {
   return res.status(200).json(posts);
 };
 
-export const findPostById = async (req: any, res: Response) => {
+export const findPostById = async (req: Request, res: Response) => {
   const { postId } = req.params;
+  console.log(req.params);
 
   const postsService = new PostsService();
   const post = await postsService.findById(Number(postId));

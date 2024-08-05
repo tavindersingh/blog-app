@@ -1,31 +1,54 @@
-import { Post } from "@/models/Post";
+import matter from "gray-matter";
+import Image from "next/image";
+import { remark } from "remark";
+import html from "remark-html";
 
 const PostDetailPage = async ({ params }: { params: { postId: string } }) => {
-  const post: Post = await getPost(params.postId);
-
+  const post = await getPost(params.postId);
   return (
     <div className="max-w-3xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
-      <p className="text-gray-700 mb-4">{post.content}</p>
-      <div className="flex items-center space-x-2">
-        <img
-          src={`https://api.dicebear.com/6.x/adventurer/svg?seed=${post.author.name}`}
+      <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
+      <div className="flex items-center space-x-2 mb-5">
+        <Image
+          src={`https://api.dicebear.com/6.x/adventurer/png?seed=${post.author.name}`}
           alt={post.author.name}
-          className="w-10 h-10 rounded-full"
+          width={48}
+          height={48}
+          className="w-12 h-12 rounded-full"
         />
-        <span className="text-gray-500">{post.author.name}</span>
+        <div className="flex flex-col">
+          <span className="text-gray-500 text-sm font-semibold">
+            {post.author.name}
+          </span>
+          <span className="text-gray-500 text-sm">{post.createdAt}</span>
+        </div>
       </div>
+      <hr />
+      <div
+        className="py-10"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
     </div>
   );
 };
 
-export default PostDetailPage;
-
 async function getPost(postId: string) {
   try {
     const res = await fetch(`http://localhost:3333/posts/${postId}`);
-    return await res.json();
+    const data = await res.json();
+
+    const matterResult = matter(data.content);
+
+    const processedContent = await remark()
+      .use(html)
+      .process(matterResult.content);
+
+    const contentHtml = processedContent.toString();
+
+    return { ...data, content: contentHtml };
   } catch (error) {
     console.log(error);
   }
 }
+
+export default PostDetailPage;

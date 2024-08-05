@@ -1,3 +1,4 @@
+import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
 import { authRouter } from "./auth/auth.routes";
@@ -15,6 +16,7 @@ const port = process.env.PORT || 3333;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Blog Api Server");
