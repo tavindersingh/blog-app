@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
-import { Post } from "./entities/post.entity";
 import { CreatePostDto } from "./dtos/create-post.dto";
 import { QueryPostDto } from "./dtos/query-post.dto";
+import { Post } from "./entities/post.entity";
 
 export class PostsService {
   private repository: Repository<Post>;
@@ -21,10 +21,11 @@ export class PostsService {
       where: {
         authorId: queryPostDto.author,
       },
+      relations: ["author"],
     });
   }
 
   async findById(id: number): Promise<Post | null> {
-    return this.repository.findOne({ where: { id } });
+    return this.repository.findOne({ where: { id }, relations: ["author"] });
   }
 }
