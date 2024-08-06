@@ -8,7 +8,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 interface AuthContextProps {
   accessToken: string | undefined;
-  login: (email: string, password: string) => Promise<TokenResponse>;
+  login: (email: string, password: string) => Promise<boolean>;
   signup: (
     name: string,
     email: string,
@@ -44,25 +44,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         client.defaults.headers.common = {
           Authorization: `Bearer ${data.token}`,
         };
+      } else {
+        router.push("/login");
       }
     };
     fetchToken();
   }, []);
 
   const login = async (email: string, password: string) => {
-    const tokenResponse = await client.post<TokenResponse>("/auth/login", {
-      email,
-      password,
+    const tokenResponse = await fetch("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
     });
-    if (tokenResponse) {
-      localStorage.setItem("accessToken", tokenResponse.data.accessToken);
-      setToken(tokenResponse.data.accessToken);
-      // router.push("/");
+
+    const body = await tokenResponse.json();
+
+    if (tokenResponse.ok) {
+      setToken(body.accessToken);
+      return true;
     } else {
       // alert("Invalid credentials");
+      return false;
     }
-
-    return tokenResponse.data;
   };
 
   const signup = async (name: string, email: string, password: string) => {
@@ -85,7 +88,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       method: "POST",
     });
 
-    router.push("/signin");
+    setUser(undefined);
+    setToken(undefined);
+
+    router.push("/login");
   };
 
   const value = {

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 const Navbar = () => {
-  const { user, setUser } = useAuth();
+  const { user, setUser, logout } = useAuth();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -32,7 +32,7 @@ const Navbar = () => {
         </div>
         <div>
           {user ? (
-            <Link href="/api/auth/logout">Logout</Link>
+            <button onClick={logout}>Logout</button>
           ) : (
             <Link href="/api/auth/login">Login</Link>
           )}

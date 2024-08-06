@@ -1,5 +1,6 @@
 import client from "@/app/helpers/api";
 import { TokenResponse } from "@/models/TokenResponse";
+import { access } from "fs";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -10,7 +11,11 @@ export async function POST(req: Request) {
   });
 
   if (tokenResponse.data) {
-    const response = NextResponse.json({ success: true });
+    const response = NextResponse.json({
+      success: true,
+      accessToken: tokenResponse.data.accessToken,
+    });
+
     response.cookies.set("accessToken", tokenResponse.data.accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

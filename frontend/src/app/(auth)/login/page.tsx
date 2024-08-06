@@ -1,5 +1,6 @@
 "use client";
 
+import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -7,16 +8,14 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const { login } = useAuth();
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await login(email, password);
 
-    if (response.ok) {
+    if (response) {
       router.push("/dashboard");
     } else {
       alert("Invalid credentials");
