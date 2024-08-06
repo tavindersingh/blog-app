@@ -1,3 +1,4 @@
+import { formatDate } from "@/helpers/formatter";
 import { Post } from "@/models/Post";
 import Link from "next/link";
 import React from "react";
@@ -17,7 +18,9 @@ const DashboardPostListItem: React.FC<DashboardPostListItemProps> = ({
         <UserProfileImage user={post.author} />
         <div className="flex flex-col justify-center">
           <span className="text-sm">{post.author.name}</span>
-          <span className="text-gray-500 text-xs">{post.createdAt}</span>
+          <span className="text-gray-500 text-xs">
+            {formatDate(post.createdAt)}
+          </span>
         </div>
       </div>
     </Link>

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import UserProfileImage from "./UserProfileImage";
+import { formatDate } from "@/helpers/formatter";
 
 type PostListItemProps = {
   post: Post;
@@ -19,7 +20,9 @@ const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
         <UserProfileImage user={post.author} />
         <div className="flex flex-col justify-center">
           <span className="text-sm">{post.author.name}</span>
-          <span className="text-gray-500 text-xs">{post.createdAt}</span>
+          <span className="text-gray-500 text-xs">
+            {formatDate(post.createdAt)}
+          </span>
         </div>
       </div>
     </Link>

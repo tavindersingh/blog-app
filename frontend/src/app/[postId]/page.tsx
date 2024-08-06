@@ -1,3 +1,4 @@
+import { formatDate } from "@/helpers/formatter";
 import matter from "gray-matter";
 import Image from "next/image";
 import { remark } from "remark";
@@ -20,7 +21,9 @@ const PostDetailPage = async ({ params }: { params: { postId: string } }) => {
           <span className="text-gray-500 text-sm font-semibold">
             {post.author.name}
           </span>
-          <span className="text-gray-500 text-sm">{post.createdAt}</span>
+          <span className="text-gray-500 text-xs">
+            {formatDate(post.createdAt)}
+          </span>
         </div>
       </div>
       <hr />
