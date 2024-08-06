@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { SignupDto } from "./dtos/signup.dto";
 import { AuthService } from "./auth.service";
 import { LoginDto } from "./dtos/login.dto";
+import { SignupDto } from "./dtos/signup.dto";
 
 export const signup = async (req: Request, res: Response) => {
-  const signupDto = req.body.data as SignupDto;
+  const signupDto = req.body as SignupDto;
 
   console.log(signupDto);
 

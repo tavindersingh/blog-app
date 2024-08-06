@@ -1,7 +1,6 @@
 "use client";
 
 import client from "@/app/helpers/api";
-import { TokenResponse } from "@/models/TokenResponse";
 import { User } from "@/models/User";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -9,11 +8,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 interface AuthContextProps {
   accessToken: string | undefined;
   login: (email: string, password: string) => Promise<boolean>;
-  signup: (
-    name: string,
-    email: string,
-    password: string
-  ) => Promise<TokenResponse>;
+  signup: (name: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
   user?: User;
   setUser: (user?: User) => void;
@@ -45,7 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           Authorization: `Bearer ${data.token}`,
         };
       } else {
-        router.push("/login");
+        // router.push("/login");
       }
     };
     fetchToken();
@@ -69,12 +64,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const signup = async (name: string, email: string, password: string) => {
-    const response = await client.post<TokenResponse>("/auth/signup", {
-      name,
-      email,
-      password,
+    const tokenResponse = await fetch("/api/auth/signup", {
+      method: "POST",
+      body: JSON.stringify({ name, email, password }),
     });
-    return response.data;
+
+    const body = await tokenResponse.json();
+
+    if (tokenResponse.ok) {
+      setToken(body.accessToken);
+      return true;
+    } else {
+      // alert("Invalid credentials");
+      return false;
+    }
   };
 
   const getCurrentUser = async () => {

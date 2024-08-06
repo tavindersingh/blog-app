@@ -1,9 +1,9 @@
 import createHttpError from "http-errors";
+import { comparePassword } from "../helpers/encrypt";
 import { generateToken } from "../helpers/tokens";
 import { UsersService } from "../users/users.service";
 import { LoginDto } from "./dtos/login.dto";
 import { SignupDto } from "./dtos/signup.dto";
-import { comparePassword } from "../helpers/encrypt";
 
 export class AuthService {
   private usersService: UsersService;
@@ -13,6 +13,7 @@ export class AuthService {
   }
 
   async signup(signupDto: SignupDto) {
+    console.log(signupDto);
     const user = await this.usersService.create(signupDto);
 
     const accessToken = generateToken({
