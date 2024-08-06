@@ -19,17 +19,11 @@ jobs:
           AWS_SSH_HOST: ${{ secrets.AWS_SSH_HOST }}
           AWS_SSH_USER: ${{ secrets.AWS_SSH_USER }}
         run: |
-          mkdir -p ~/.ssh/
-          echo "$AWS_SSH_KEY"
-          echo "$AWS_SSH_KEY" > ~/.ssh/github
+          mkdir -p ~/.ssh
+          echo "${{ secrets.AWS_SSH_KEY }}" | tr -d '\r' > ~/.ssh/github
           chmod 600 ~/.ssh/github
-          cat >>~/.ssh/config <<END
-          Host target
-            HostName $AWS_SSH_HOST
-            User $AWS_SSH_USER
-            IdentityFile ~/.ssh/github
-            LogLevel ERROR
-            StrictHostKeyChecking no
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.AWS_SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -38,7 +32,7 @@ jobs:
 
       - name: Pull Latest Code
         run: |
-          ssh target "git pull origin main"
+          ssh -i ~/.ssh/github -o StrictHostKeyChecking=no ${{ secrets.AWS_SSH_USER }}@${{ secrets.AWS_SSH_HOST }} << 'EOF'
 
       - name: Install Dependencies and Deploy Backend
         env:
