@@ -1,20 +1,18 @@
 import { Post } from "@/models/Post";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import UserProfileImage from "./UserProfileImage";
 
-type PostListItemProps = {
+type DashboardPostListItemProps = {
   post: Post;
 };
 
-const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
+const DashboardPostListItem: React.FC<DashboardPostListItemProps> = ({
+  post,
+}) => {
   return (
-    <Link
-      href={`/${post.id}`}
-      className="flex flex-col bg-white shadow-md p-4 rounded-md cursor-pointer hover:shadow-xl duration-200"
-    >
-      <h2 className="text-xl font-bold mb-2">{post.title}</h2>
+    <Link href="" className="flex flex-col p-4">
+      <h3 className="text-2xl font-bold">{post.title}</h3>
       <div className="flex space-x-1">
         <UserProfileImage user={post.author} />
         <div className="flex flex-col justify-center">
@@ -26,4 +24,4 @@ const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
   );
 };
 
-export default PostListItem;
+export default DashboardPostListItem;

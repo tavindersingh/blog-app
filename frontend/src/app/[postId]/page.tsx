@@ -6,7 +6,7 @@ import html from "remark-html";
 const PostDetailPage = async ({ params }: { params: { postId: string } }) => {
   const post = await getPost(params.postId);
   return (
-    <div className="max-w-3xl mx-auto p-4">
+    <div className="max-w-3xl mx-auto py-10">
       <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
       <div className="flex items-center space-x-2 mb-5">
         <Image

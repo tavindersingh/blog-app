@@ -36,10 +36,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     const fetchToken = async () => {
       const response = await fetch("/api/auth/token");
       const data = await response.json();
-      setToken(data.token);
+      if (data.token) {
+        setToken(data.token);
+
+        client.defaults.headers.common = {
+          Authorization: `Bearer ${data.token}`,
+        };
+      }
     };
     fetchToken();
   }, []);
+
+  // useEffect(() => {
+  //   console.log(token);
+
+  // }, [token]);
 
   useEffect(() => {
     console.log(token);
