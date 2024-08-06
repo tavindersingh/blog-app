@@ -34,8 +34,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const fetchToken = async () => {
+      console.log("Fetching token");
       const response = await fetch("/api/auth/token");
       const data = await response.json();
+
       if (data.token) {
         setToken(data.token);
 
@@ -46,26 +48,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     };
     fetchToken();
   }, []);
-
-  // useEffect(() => {
-  //   console.log(token);
-
-  // }, [token]);
-
-  useEffect(() => {
-    console.log(token);
-    if (token) {
-      client.defaults.headers.common = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      localStorage.setItem("accessToken", token);
-    } else {
-      delete client.defaults.headers.common["Authorization"];
-      console.log("Delete token");
-      localStorage.removeItem("accessToken");
-    }
-  }, [token]);
 
   const login = async (email: string, password: string) => {
     const tokenResponse = await client.post<TokenResponse>("/auth/login", {
@@ -98,13 +80,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(data.user);
   };
 
-  const logout = () => {
-    fetch("/api/auth/logout", {
+  const logout = async () => {
+    await fetch("/api/auth/logout", {
       method: "POST",
-    }).then(() => {
-      setToken(undefined);
-      router.push("/signin");
     });
+
+    router.push("/signin");
   };
 
   const value = {

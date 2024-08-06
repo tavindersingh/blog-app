@@ -1,3 +1,4 @@
+import client from "@/app/helpers/api";
 import { Post } from "@/models/Post";
 
 const usePosts = () => {
@@ -13,7 +14,20 @@ const usePosts = () => {
     }
   };
 
-  return { getCurrentUsersPost };
+  const createNewPost = async ({
+    title,
+    content,
+  }: {
+    title: string;
+    content: string;
+  }) => {
+    const response = await client.post("/posts", {
+      title,
+      content,
+    });
+  };
+
+  return { getCurrentUsersPost, createNewPost };
 };
 
 export default usePosts;
