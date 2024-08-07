@@ -46,7 +46,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     "list",
     "bullet",
     "link",
-    // "image",
     "align",
     "color",
     "code-block",
@@ -65,14 +64,16 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         <input
           type="text"
           placeholder="Title"
-          className="w-full text-4xl font-bold focus:outline-none"
+          className="w-full text-4xl font-bold focus:outline-none bg-transparent"
           autoFocus
           value={title}
           onChange={(e) => onTitleChange(e.target.value)}
         />
         <button
-          onClick={onPublish}
-          className="flex bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-4 rounded-full"
+          onClick={title.length == 0 ? undefined : onPublish}
+          className={`flex text-white font-bold py-1 px-4 rounded-full duration-200 ${
+            title.length == 0 ? "bg-gray-300" : "bg-blue-500 hover:bg-blue-600"
+          }`}
         >
           Publish
         </button>
@@ -82,7 +83,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         onChange={handleEditorChange}
         modules={quillModules}
         formats={quillFormats}
-        className="w-full h-full bg-white"
+        className="w-full h-full bg-transparent"
       />
     </div>
   );

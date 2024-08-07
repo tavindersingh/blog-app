@@ -7,7 +7,7 @@ export default async function Home() {
 
   return (
     <main>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 container mx-auto py-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 container mx-auto py-10 px-5 md:px-0">
         {posts.map((post) => (
           <PostListItem key={post.id} post={post} />
         ))}

@@ -21,6 +21,9 @@ export class PostsService {
       where: {
         authorId: queryPostDto.author,
       },
+      order: {
+        createdAt: "DESC",
+      },
       relations: ["author"],
     });
   }

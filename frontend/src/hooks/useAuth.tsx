@@ -47,18 +47,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const login = async (email: string, password: string) => {
-    const tokenResponse = await fetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const tokenResponse = await fetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
 
-    const body = await tokenResponse.json();
+      const body = await tokenResponse.json();
 
-    if (tokenResponse.ok) {
-      setToken(body.accessToken);
-      return true;
-    } else {
-      // alert("Invalid credentials");
+      if (tokenResponse.ok) {
+        setToken(body.accessToken);
+        return true;
+      } else {
+        // alert("Invalid credentials");
+        return false;
+      }
+    } catch (error) {
       return false;
     }
   };

@@ -5,6 +5,7 @@ import useAuth from "@/hooks/useAuth";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -19,10 +20,25 @@ const LoginPage = () => {
     const response = await login(email, password);
 
     if (response) {
-      router.push("/dashboard");
+      showSuccessToast();
+      router.replace("/dashboard");
     } else {
-      alert("Invalid credentials");
+      showErrorToast();
     }
+  };
+
+  const showSuccessToast = () => {
+    toast.success("Login Successful!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
+
+  const showErrorToast = () => {
+    toast.error("Invalid credentials", {
+      position: "top-right",
+      autoClose: 2000,
+    });
   };
 
   return (
