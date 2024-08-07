@@ -1,12 +1,12 @@
 import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/hooks/useAuth";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+// import { Inter } from "next/font/google";
 import "react-toastify/ReactToastify.min.css";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="cupcake">
-      <body className={inter.className}>
+      <body>
         <AuthProvider>
           <div>
             <Navbar />

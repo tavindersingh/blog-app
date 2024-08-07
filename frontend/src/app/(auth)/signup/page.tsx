@@ -10,13 +10,7 @@ const SignupPage = () => {
   const router = useRouter();
   const { signup } = useAuth();
 
-  const handleLogin = async (
-    e: FormEvent<HTMLFormElement> & {
-      name: string;
-      email: string;
-      password: string;
-    }
-  ) => {
+  const handleLogin = async (e: any) => {
     const name = e.name;
     const email = e.email;
     const password = e.password;

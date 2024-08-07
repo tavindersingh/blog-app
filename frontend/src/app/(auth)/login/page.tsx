@@ -3,17 +3,15 @@
 import { LoginSchema } from "@/helpers/validationSchema";
 import useAuth from "@/hooks/useAuth";
 import { Field, Form, Formik } from "formik";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
 import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const router = useRouter();
   const { login } = useAuth();
 
-  const handleLogin = async (
-    e: FormEvent<HTMLFormElement> & { email: string; password: string }
-  ) => {
+  const handleLogin = async (e: any) => {
     const email = e.email;
     const password = e.password;
 
@@ -101,6 +99,12 @@ const LoginPage = () => {
                   Login
                 </button>
               </div>
+              <Link
+                className="text-sm text-center text-blue-500"
+                href="/signup"
+              >
+                Create New Account...
+              </Link>
             </div>
           </Form>
         )}
