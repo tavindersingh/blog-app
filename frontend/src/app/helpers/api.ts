@@ -1,7 +1,8 @@
+import { AppConstants } from "@/helpers/app_constants";
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "http://localhost:3333",
+  baseURL: AppConstants.baseUrl,
 });
 
 export default client;

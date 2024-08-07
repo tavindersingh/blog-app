@@ -1,4 +1,5 @@
 import PostListItem from "@/components/PostListItem";
+import { AppConstants } from "@/helpers/app_constants";
 import { Post } from "@/models/Post";
 
 export default async function Home() {
@@ -17,7 +18,7 @@ export default async function Home() {
 
 async function getPosts() {
   try {
-    const res = await fetch("http://localhost:3333/posts");
+    const res = await fetch(`${AppConstants.baseUrl}/posts`);
     return await res.json();
   } catch (error) {
     console.log(error);

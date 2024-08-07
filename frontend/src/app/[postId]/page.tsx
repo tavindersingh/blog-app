@@ -1,3 +1,4 @@
+import { AppConstants } from "@/helpers/app_constants";
 import { formatDate } from "@/helpers/formatter";
 import matter from "gray-matter";
 import Image from "next/image";
@@ -37,7 +38,7 @@ const PostDetailPage = async ({ params }: { params: { postId: string } }) => {
 
 async function getPost(postId: string) {
   try {
-    const res = await fetch(`http://localhost:3333/posts/${postId}`);
+    const res = await fetch(`${AppConstants.baseUrl}/posts/${postId}`);
     const data = await res.json();
 
     const matterResult = matter(data.content);
