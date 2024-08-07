@@ -5,9 +5,13 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 const Navbar = () => {
-  const { user, setUser, logout } = useAuth();
+  const { user, setUser, logout, accessToken } = useAuth();
 
   useEffect(() => {
+    if (!accessToken) {
+      return;
+    }
+
     const fetchUser = async () => {
       const response = await fetch("/api/user/me");
       if (response.ok) {
@@ -20,7 +24,7 @@ const Navbar = () => {
     if (!user) {
       fetchUser();
     }
-  }, [user, setUser]);
+  }, [user, setUser, accessToken]);
 
   return (
     <div className="flex gap-4 w-screen h-16 shadow-lg items-center">

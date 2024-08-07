@@ -16,15 +16,15 @@ const DashboardPage = () => {
 
   useEffect(() => {
     if (user) {
+      const fetchPostsList = async () => {
+        const response = await getCurrentUsersPost();
+
+        setPosts(response);
+      };
+
       fetchPostsList();
     }
   }, [user]);
-
-  const fetchPostsList = async () => {
-    const response = await getCurrentUsersPost();
-
-    setPosts(response);
-  };
 
   return (
     <div className="flex flex-col py-10 container mx-auto">
