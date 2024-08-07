@@ -1,3 +1,3 @@
 export class AppConstants {
-  public static baseUrl = "http://localhost:3333";
+  public static baseUrl = "http://13.233.154.22:3333";
 }
